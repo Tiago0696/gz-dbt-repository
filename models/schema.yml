@@ -1,11 +1,11 @@
 version: 2
 
 sources:
-  - name: raw  # Alias du dataset (au lieu de gz_raw_data)
-    schema: gz_raw_data  # Nom réel du dataset dans BigQuery
+  - name: raw
+    schema: gz_raw_data
     tables:
       - name: raw_gz_sales
-        alias: sales  # Alias pour simplifier les requêtes DBT
+        alias: sales
       - name: raw_gz_product
         alias: product
       - name: raw_gz_ship
