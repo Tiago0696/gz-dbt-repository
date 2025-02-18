@@ -2,40 +2,29 @@ version: 2
 
 sources:
   - name: raw
-    schema: gz_raw_data  # Assurez-vous que c'est bien le nom de votre dataset dans BigQuery
+    schema: gz_raw_data
     tables:
-      - name: raw_gz_sales
-        description: "Sales transactions, one row per product_id per order."
-        columns:
-          - name: date_date
-            description: "Date of the transaction."
-          - name: orders_id
-            description: "Unique identifier for the order."
-          - name: pdt_id
-            description: "Unique identifier for the product."
-          - name: revenue
-            description: "Revenue generated for the product."
-          - name: quantity
-            description: "Number of products purchased."
+      - name: sales
+        identifier: raw_gz_sales
+        description: sales of Greenweez / we have on row per product_id found in each orders_id
+        tests:
+          - unique:
+              column_name: "(orders_id||pdt_id)"
 
-      - name: raw_gz_product
-        description: "Product details including prices and names."
+      - name: product
+        identifier: raw_gz_product
+        description: products of Greenweez / we have on row per product_id with purchase_price
         columns:
           - name: products_id
-            description: "Unique identifier for the product."
-          - name: purchSE_PRICE
-            description: "Product purchase price."
+            tests:
+              - unique
+              - not_null       
 
-      - name: raw_gz_ship
-        description: "Shipping details for each order."
+      - name: ship
+        identifier: raw_gz_ship
+        description: ship of Greenweez / we have on row per order_id with shipping_fees, log_cost and ship_cost
         columns:
           - name: orders_id
-            description: "Unique identifier for the order."
-          - name: shipping_fee
-            description: "Shipping fee charged to the customer."
-          - name: shipping_fee_1
-            description: "Alternative shipping fee, may need filtering."
-          - name: logCost
-            description: "Logistic cost associated with the order."
-          - name: ship_cost
-            description: "Cost of shipping."
+            tests:
+              - unique
+              - not_null

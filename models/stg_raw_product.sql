@@ -1,11 +1,11 @@
 WITH source AS (
-    SELECT * FROM {{ source('raw', 'raw_gz_product') }}
+    SELECT * FROM {{ source('raw', 'product') }}
 ),
 
 renamed AS (
     SELECT
         products_id,
-        CAST(purchSE_PRICE AS FLOAT64) AS purchase_price
+        CAST(purchse_price AS FLOAT64) AS purchase_price
     FROM source
 )
 
