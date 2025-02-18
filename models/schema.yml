@@ -28,3 +28,50 @@ sources:
             tests:
               - unique
               - not_null
+
+models:
+  - name: int_sales_margin
+    description: "Calcul de la marge par produit en fonction du chiffre d'affaires et du coût d'achat."
+    columns:
+      - name: orders_id
+        description: "Identifiant unique de la commande."
+        tests:
+          - not_null
+      - name: date_date
+        description: "Date de la transaction."
+      - name: revenue
+        description: "Chiffre d'affaires total pour le produit."
+      - name: quantity
+        description: "Nombre d'articles vendus."
+      - name: purchase_cost
+        description: "Coût d'achat du produit."
+      - name: margin
+        description: "Marge réalisée sur le produit (revenue - purchase_cost)."
+
+  - name: int_orders_margin
+    description: "Calcul de la marge par commande en agrégeant les produits vendus dans une même commande."
+    columns:
+      - name: orders_id
+        description: "Identifiant unique de la commande."
+        tests:
+          - not_null
+      - name: date_date
+        description: "Date de la transaction."
+      - name: revenue
+        description: "Chiffre d'affaires total pour la commande."
+      - name: purchase_cost
+        description: "Coût d'achat total pour la commande."
+      - name: margin
+        description: "Marge réalisée sur la commande (revenue - purchase_cost)."
+
+  - name: int_orders_operational
+    description: "Calcul de la marge opérationnelle en intégrant les frais d'expédition et les coûts logistiques."
+    columns:
+      - name: orders_id
+        description: "Identifiant unique de la commande."
+        tests:
+          - not_null
+      - name: date_date
+        description: "Date de la transaction."
+      - name: operational_margin
+        description: "Marge opérationnelle de la commande (margin + shipping_fee - logCost - ship_cost)."
