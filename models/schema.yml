@@ -1,12 +1,41 @@
 version: 2
 
 sources:
-  - name: raw  # Alias du dataset (au lieu de gz_raw_data)
-    schema: gz_raw_data  # Nom réel du dataset dans BigQuery
+  - name: raw
+    schema: gz_raw_data  # Assurez-vous que c'est bien le nom de votre dataset dans BigQuery
     tables:
       - name: raw_gz_sales
-        alias: sales  # Alias pour simplifier les requêtes DBT
+        description: "Sales transactions, one row per product_id per order."
+        columns:
+          - name: date_date
+            description: "Date of the transaction."
+          - name: orders_id
+            description: "Unique identifier for the order."
+          - name: pdt_id
+            description: "Unique identifier for the product."
+          - name: revenue
+            description: "Revenue generated for the product."
+          - name: quantity
+            description: "Number of products purchased."
+
       - name: raw_gz_product
-        alias: product
+        description: "Product details including prices and names."
+        columns:
+          - name: products_id
+            description: "Unique identifier for the product."
+          - name: purchSE_PRICE
+            description: "Product purchase price."
+
       - name: raw_gz_ship
-        alias: ship
+        description: "Shipping details for each order."
+        columns:
+          - name: orders_id
+            description: "Unique identifier for the order."
+          - name: shipping_fee
+            description: "Shipping fee charged to the customer."
+          - name: shipping_fee_1
+            description: "Alternative shipping fee, may need filtering."
+          - name: logCost
+            description: "Logistic cost associated with the order."
+          - name: ship_cost
+            description: "Cost of shipping."
